@@ -1,0 +1,13 @@
+format: jb-book
+root: intro
+chapters:
+  - file: task2
+    title: "Laboratory Task 2 - Single Forward Pass and Error Analysis"
+  - file: task3
+    title: "Laboratory Task 3 - Implementing Forward and Backward Propagation"
+  - file: task4
+    title: "Laboratory Task 4 - Training Linear Regression Model in PyTorch"
+  - file: task5
+    title: "Laboratory Task 5 - PyTorch Basics"
+  - file: task6
+    title: "Laboratory Task 6 (E1 - CNN Implementation)"
