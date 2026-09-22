@@ -15,4 +15,3 @@ This Jupyter Book is designed to:
 
 * Provide a **structured documentation** of my work in DS413, covering all exercises and projects.
 * Highlight both **my theoretical understanding and practical skills** in deep learning, from concepts applied in activities to project implementations.
-
