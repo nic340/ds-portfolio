@@ -11,3 +11,6 @@ chapters:
     title: "Laboratory Task 5 - PyTorch Basics"
   - file: task6
     title: "Laboratory Task 6 (E1 - CNN Implementation)"
+  - file: task7
+    title: "Laboratory Exercise (Model Inference on Custom Dataset)"
+
