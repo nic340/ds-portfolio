@@ -172,8 +172,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="task4.html">Laboratory Task 4 - Training Linear Regression Model in PyTorch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task5.html">Laboratory Task 5 - PyTorch Basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task6.html">Laboratory Task 6 (E1 - CNN Implementation)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Laboratory Exercise (Model Inference on Custom Dataset)</strong></a></li>
-
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Laboratory Exercise (Model Inference on Custom Dataset)</a></li>
 </ul>
 
     </div>
@@ -337,19 +336,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>Laboratory Exercise (Model Inference on Custom Dataset)</strong></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gem-nicole-r-diones"><strong>GEM NICOLE R. DIONES</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ds4a"><strong>DS4A</strong></a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-analysis-and-conclusion">Performance Analysis and Conclusion</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-performance-overview">1. Comparative Performance Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-analysis-performance-drivers">2. Architectural Analysis &amp; Performance Drivers</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">3. Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-analysis-and-conclusion">Performance Analysis and Conclusion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-performance-overview">1. Comparative Performance Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-analysis-performance-drivers">2. Architectural Analysis &amp; Performance Drivers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">3. Conclusion</a></li>
 </ul>
 </li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -360,14 +353,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="laboratory-exercise-model-inference-on-custom-dataset">
-<h1><strong>Laboratory Exercise (Model Inference on Custom Dataset)</strong><a class="headerlink" href="#laboratory-exercise-model-inference-on-custom-dataset" title="Permalink to this heading">#</a></h1>
-<section id="gem-nicole-r-diones">
-<h2><strong>GEM NICOLE R. DIONES</strong><a class="headerlink" href="#gem-nicole-r-diones" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="ds4a">
-<h2><strong>DS4A</strong><a class="headerlink" href="#ds4a" title="Permalink to this heading">#</a></h2>
-<p>Imports</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="laboratory-exercise-model-inference-on-custom-dataset">
+<h1>Laboratory Exercise (Model Inference on Custom Dataset)<a class="headerlink" href="#laboratory-exercise-model-inference-on-custom-dataset" title="Permalink to this heading">#</a></h1>
+<div style="background-color: #d4e7d4; padding: 20px; border-radius: 8px; color: #2e4d2e; margin-bottom: 20px;">
+  <p style="margin:0; font-size: 1.1em;"><strong>Course:</strong> DS Elective 4 - Deep Learning</p>
+  <p style="margin:0; font-size: 1.1em;"><strong>Name:</strong> Gem Nicole R. Diones</p>
+  <p style="margin:0; font-size: 1.1em;"><strong>Year & Section:</strong> DS4A</p>
+</div><p>Imports</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -575,12 +567,10 @@ document.write(`
 <img alt="_images/6bd88ee30db6202b164799d409648466da913f5aae3473472234ea6af2acace7.png" src="_images/6bd88ee30db6202b164799d409648466da913f5aae3473472234ea6af2acace7.png" />
 </div>
 </div>
-</section>
-</section>
 <section id="performance-analysis-and-conclusion">
-<h1>Performance Analysis and Conclusion<a class="headerlink" href="#performance-analysis-and-conclusion" title="Permalink to this heading">#</a></h1>
+<h2>Performance Analysis and Conclusion<a class="headerlink" href="#performance-analysis-and-conclusion" title="Permalink to this heading">#</a></h2>
 <section id="comparative-performance-overview">
-<h2>1. Comparative Performance Overview<a class="headerlink" href="#comparative-performance-overview" title="Permalink to this heading">#</a></h2>
+<h3>1. Comparative Performance Overview<a class="headerlink" href="#comparative-performance-overview" title="Permalink to this heading">#</a></h3>
 <p>The model comparison evaluated five pre-trained architectures—<strong>ResNet18</strong>, <strong>ResNet50</strong>, <strong>MobileNetV2</strong>, <strong>EfficientNetB0</strong>, and <strong>DenseNet121</strong>—on the custom dataset across four metrics: Accuracy, Precision, Recall, and F1-Score.</p>
 <ul class="simple">
 <li><p><strong>MobileNetV2</strong> achieved the highest overall performance across all metrics (Accuracy: 0.6000, Precision: 0.6000, Recall: 0.6000, F1-Score: 0.6000).</p></li>
@@ -591,7 +581,7 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="architectural-analysis-performance-drivers">
-<h2>2. Architectural Analysis &amp; Performance Drivers<a class="headerlink" href="#architectural-analysis-performance-drivers" title="Permalink to this heading">#</a></h2>
+<h3>2. Architectural Analysis &amp; Performance Drivers<a class="headerlink" href="#architectural-analysis-performance-drivers" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>MobileNetV2:</strong> Utilizes inverted residual blocks and depthwise separable convolutions. Its streamlined parameter count prevents severe overfitting on small custom datasets, enabling better generalization without full fine-tuning.</p></li>
 <li><p><strong>DenseNet121:</strong> Employs dense connectivity where each layer receives feature maps from all preceding layers. This encourages feature reuse and strong gradient flow across the network, preserving detailed visual information.</p></li>
@@ -601,8 +591,9 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="conclusion">
-<h2>3. Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<h3>3. Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h3>
 <p>The performance variations demonstrate that higher parameter counts and deeper network architectures do not automatically guarantee superior results on custom datasets. For small-scale datasets, compact architectures like <strong>MobileNetV2</strong> or feature-dense models like <strong>DenseNet121</strong> offer effective feature extraction while minimizing the risk of overfitting. To further boost classification metrics across all models, future work should include end-to-end model fine-tuning (unfreezing convolutional layers) and applying data augmentation techniques.</p>
+</section>
 </section>
 </section>
 
@@ -661,19 +652,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>Laboratory Exercise (Model Inference on Custom Dataset)</strong></a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gem-nicole-r-diones"><strong>GEM NICOLE R. DIONES</strong></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ds4a"><strong>DS4A</strong></a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-analysis-and-conclusion">Performance Analysis and Conclusion</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-performance-overview">1. Comparative Performance Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-analysis-performance-drivers">2. Architectural Analysis &amp; Performance Drivers</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">3. Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-analysis-and-conclusion">Performance Analysis and Conclusion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparative-performance-overview">1. Comparative Performance Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-analysis-performance-drivers">2. Architectural Analysis &amp; Performance Drivers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">3. Conclusion</a></li>
 </ul>
 </li>
 </ul>
-
   </nav></div>
 
 </div></div>
