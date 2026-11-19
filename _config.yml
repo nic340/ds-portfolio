@@ -1,3 +1,4 @@
+
 title: DS413 – Elective 4
 author: Gem Nicole R. Diones
 copyright: "2026"
@@ -9,6 +10,8 @@ html:
   favicon: "Laboratory Task 6 (E1 - CNN Implementation).png"
   use_issues_button: false
   use_repository_button: true
+  extra_css:
+    - _static/custom.css
 
 repository:
   url: "https://github.com/nic340/ds-portfolio"
