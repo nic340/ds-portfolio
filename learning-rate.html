@@ -1,0 +1,657 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>🧠 How Learning Rate Shapes the Journey of a Small CNN &#8212; DS413 – Elective 4</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=6a604523" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=47cbb030" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'learning-rate';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Laboratory Exercise (Model Inference on Custom Dataset)" href="task7.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">DS413 – Elective 4</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    🐾 DS413 – Elective 4
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="task2.html">Laboratory Task 2 - Single Forward Pass and Error Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task3.html">Laboratory Task 3 - Implementing Forward and Backward Propagation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task4.html">Laboratory Task 4 - Training Linear Regression Model in PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task5.html">Laboratory Task 5 - PyTorch Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task6.html">Laboratory Task 6 (E1 - CNN Implementation)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task7.html">Laboratory Exercise (Model Inference on Custom Dataset)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Deep Learning Blog - How Learning Rate Shapes the Journey of a Small CNN</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nic340/ds-portfolio" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/learning-rate.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>🧠 How Learning Rate Shapes the Journey of a Small CNN</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-does-one-small-number-make-a-big-difference">🌸 Introduction: Does One Small Number Make a Big Difference?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-learning-rate">🐾 What Is a Learning Rate?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-experiment">🔬 The Experiment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-and-observations">📊 Results and Observations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion-what-did-i-learn">💭 Discussion: What Did I Learn?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">🐱 Key Takeaways</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">📚 References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-assistance-and-disclosure">🤖 AI Assistance and Disclosure</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="how-learning-rate-shapes-the-journey-of-a-small-cnn">
+<h1>🧠 How Learning Rate Shapes the Journey of a Small CNN<a class="headerlink" href="#how-learning-rate-shapes-the-journey-of-a-small-cnn" title="Link to this heading">#</a></h1>
+<p><em>An experiment on finding the right learning rate using Fashion-MNIST</em></p>
+<section id="introduction-does-one-small-number-make-a-big-difference">
+<h2>🌸 Introduction: Does One Small Number Make a Big Difference?<a class="headerlink" href="#introduction-does-one-small-number-make-a-big-difference" title="Link to this heading">#</a></h2>
+<p>Imagine teaching a student to solve a problem. If you give them very small steps, they may take a long time to understand it. If you push them too quickly, they might skip important details and make mistakes. Training a neural network works in a similar way.</p>
+<p>I wanted to understand how much the learning rate affects a Convolutional Neural Network (CNN). Would changing this one setting significantly affect its performance? And could a learning rate that works well for one training run become unstable in another?</p>
+<p>To investigate, I experimented with five learning rates while keeping the model and other training settings consistent.</p>
+</section>
+<section id="what-is-a-learning-rate">
+<h2>🐾 What Is a Learning Rate?<a class="headerlink" href="#what-is-a-learning-rate" title="Link to this heading">#</a></h2>
+<p>A neural network learns by adjusting its weights to reduce its loss. Loss is a numerical measure of how far the model’s predictions are from the correct answers. During training, the model calculates gradients, which indicate how its weights should change to reduce that loss.</p>
+<p>The learning rate controls the size of each adjustment. A simplified update rule is:</p>
+<p>[
+\theta_{\text{new}} = \theta_{\text{old}} - \eta \nabla L(\theta)
+]</p>
+<p>Here, (\theta) represents the model’s weights, (\eta) is the learning rate, and (\nabla L(\theta)) represents the gradient of the loss.</p>
+<p>Think of it as walking down a hill while trying to reach the lowest point. Very small steps may get you there eventually, but progress can be slow. Extremely large steps may cause you to overshoot the lowest point repeatedly. A suitable step size helps you move toward the bottom efficiently.</p>
+<p>The learning rate is a hyperparameter: a setting chosen before training rather than a value automatically learned by the model. An epoch is one complete pass through the training data. The Adam optimizer uses gradient information and adaptive updates to adjust model weights. A validation set helps evaluate performance during development, while a separate test set is reserved for the final evaluation. A random seed controls sources of randomness so that experiments can be repeated under comparable conditions.</p>
+</section>
+<section id="the-experiment">
+<h2>🔬 The Experiment<a class="headerlink" href="#the-experiment" title="Link to this heading">#</a></h2>
+<p>I used the Fashion-MNIST dataset, which contains grayscale images of clothing across ten categories. The experiment used a training subset of 10,000 images, a validation set of 6,000 images, and a separate test set.</p>
+<p>The same small CNN architecture was used for every run:</p>
+<ul class="simple">
+<li><p>Convolutional layers with 32 and 64 channels</p></li>
+<li><p>A fully connected layer with 128 hidden units</p></li>
+<li><p>ReLU activation, Batch Normalization, and dropout of 0.25</p></li>
+<li><p>Adam optimizer, without weight decay or a learning-rate scheduler</p></li>
+</ul>
+<p>The batch size was 64, and each model trained for 8 epochs. I compared five learning rates: (0.00001), (0.0001), (0.001), (0.01), and (0.1). Each setting was tested with three random seeds: 0, 1, and 2.</p>
+<p>This allowed me to compare the learning rates while also observing how much results varied across random seeds.</p>
+<p><strong>Reproducibility:</strong> The experiment notebook and code are available in my <a class="reference external" href="https://github.com/nic340/finding-the-right-learning-rate">GitHub repository</a>.</p>
+</section>
+<section id="results-and-observations">
+<h2>📊 Results and Observations<a class="headerlink" href="#results-and-observations" title="Link to this heading">#</a></h2>
+<p><img alt="Learning curves" src="https://raw.githubusercontent.com/nic340/finding-the-right-learning-rate/main/fig1_learning_curves.png" /></p>
+<p><em>Figure 1. Training loss, validation loss, and validation accuracy across eight epochs for each learning rate. Lines represent the mean of three seeds, while shaded regions show the minimum-to-maximum range. The 0.001 learning rate achieved the strongest overall learning curves, while 0.00001 improved more slowly and 0.1 performed inconsistently.</em></p>
+<p>The learning curves show that the learning rate strongly influenced training progress. The rate of 0.001 produced the strongest overall results. Meanwhile, 0.00001 improved more slowly, suggesting that its updates were too small for the limited eight-epoch training period.</p>
+<p>The following table summarizes the validation results.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Learning rate</p></th>
+<th class="head text-right"><p>Best validation accuracy (mean ± std)</p></th>
+<th class="head text-right"><p>Final validation loss (mean ± std)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0.00001</p></td>
+<td class="text-right"><p>81.93% ± 0.32</p></td>
+<td class="text-right"><p>0.541 ± 0.002</p></td>
+</tr>
+<tr class="row-odd"><td><p>0.0001</p></td>
+<td class="text-right"><p>88.47% ± 0.14</p></td>
+<td class="text-right"><p>0.323 ± 0.003</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>0.001</strong></p></td>
+<td class="text-right"><p><strong>89.13% ± 0.26</strong></p></td>
+<td class="text-right"><p><strong>0.298 ± 0.010</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>0.01</p></td>
+<td class="text-right"><p>87.07% ± 0.72</p></td>
+<td class="text-right"><p>0.368 ± 0.030</p></td>
+</tr>
+<tr class="row-even"><td><p>0.1</p></td>
+<td class="text-right"><p>53.12% ± 30.28</p></td>
+<td class="text-right"><p>1.215 ± 0.774</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>Table 1. Mean and standard deviation of the best validation accuracy and final validation loss across three seeds. The learning rate of 0.001 achieved the highest mean validation accuracy and lowest final validation loss.</em></p>
+<p>One particularly interesting observation came from the learning rate of 0.1. Its results varied dramatically across seeds.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Seed</p></th>
+<th class="head text-right"><p>Best validation accuracy</p></th>
+<th class="head text-right"><p>Final validation loss</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td class="text-right"><p>75.17%</p></td>
+<td class="text-right"><p>0.636</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td class="text-right"><p>10.30%</p></td>
+<td class="text-right"><p>2.309</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td class="text-right"><p>73.90%</p></td>
+<td class="text-right"><p>0.698</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>Table 2. Individual results for the learning rate of 0.1. Seed 1 collapsed to approximately chance-level accuracy for a ten-class classification task, while seeds 0 and 2 achieved considerably better results.</em></p>
+<p>This showed me that a learning rate can be problematic even when some runs appear successful. Looking at only one training run could hide instability.</p>
+<p><img alt="Learning-rate sensitivity" src="https://raw.githubusercontent.com/nic340/finding-the-right-learning-rate/main/fig2_sensitivity.png" /></p>
+<p><em>Figure 2. Final validation loss against the learning rate on a logarithmic scale. Points summarize the mean across three seeds, with variability represented by the standard deviation. The lowest mean loss occurred at 0.001.</em></p>
+<p>The curve illustrates a U-shaped relationship. Both extremely small and extremely large learning rates produced higher validation losses than the middle settings. This supports the idea that choosing a suitable learning rate is important for effective training.</p>
+<p>After comparing the validation results, I evaluated the 0.001 learning-rate setting on the separate test set using seed 0. It achieved <strong>88.17% test accuracy</strong>, with a test loss of <strong>0.326</strong>. This is a single-run test result, not an average across seeds.</p>
+</section>
+<section id="discussion-what-did-i-learn">
+<h2>💭 Discussion: What Did I Learn?<a class="headerlink" href="#discussion-what-did-i-learn" title="Link to this heading">#</a></h2>
+<p>The experiment showed that the learning rate affects not only how quickly a CNN learns but also how consistently it performs.</p>
+<p>The smallest learning rate, 0.00001, produced lower accuracy because its updates were likely too small to reach a strong solution within eight epochs. Increasing the rate to 0.0001 improved performance considerably. The 0.001 setting performed best among the tested values, achieving the highest mean validation accuracy and lowest mean validation loss.</p>
+<p>At 0.01, performance remained competitive but was slightly worse than at 0.001. At 0.1, training became highly inconsistent. One seed reached only 10.30% validation accuracy, showing how an overly aggressive learning rate can prevent reliable learning.</p>
+<p>However, these findings have limitations. I used only three random seeds, a subset of the available training data, and eight epochs. I also tested only one CNN architecture and one optimizer. Different models, datasets, training durations, or optimizers may produce different results.</p>
+</section>
+<section id="key-takeaways">
+<h2>🐱 Key Takeaways<a class="headerlink" href="#key-takeaways" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Start with a reasonable learning rate.</strong> For this experiment, 0.001 was the strongest setting among those tested with Adam.</p></li>
+<li><p><strong>Compare multiple learning rates.</strong> A rate that is too small can slow learning, while one that is too large can make training unstable.</p></li>
+<li><p><strong>Repeat experiments using different seeds.</strong> Multiple runs reveal variation that a single run may hide.</p></li>
+<li><p><strong>Use a separate test set.</strong> Validation results help compare settings, while the test set provides a final evaluation.</p></li>
+</ol>
+<p>My biggest takeaway is that successful model training is not only about choosing an architecture. Small hyperparameter decisions can make a meaningful difference in the learning process.</p>
+</section>
+<section id="references">
+<h2>📚 References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Instructor-provided class notebook: <code class="docutils literal notranslate"><span class="pre">hyperparameters_lightning.ipynb</span></code> (training setup adapted from the course material).</p></li>
+<li><p>Kingma, D. P., &amp; Ba, J. (2015). <em>Adam: A Method for Stochastic Optimization.</em> arXiv:1412.6980.</p></li>
+<li><p>Xiao, H., Rasul, K., &amp; Vollgraf, R. (2017). <em>Fashion-MNIST: A Novel Image Dataset for Benchmarking Machine Learning Algorithms.</em> arXiv:1708.07747.</p></li>
+<li><p><a class="reference external" href="https://lightning.ai/docs/pytorch/stable/">PyTorch Lightning Documentation</a>.</p></li>
+</ul>
+</section>
+<section id="ai-assistance-and-disclosure">
+<h2>🤖 AI Assistance and Disclosure<a class="headerlink" href="#ai-assistance-and-disclosure" title="Link to this heading">#</a></h2>
+<p>The starter notebook and course materials were provided by the instructor. I used Claude to assist with parts of the experiment notebook and ChatGPT to help organize and review the written explanation.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="task7.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Laboratory Exercise (Model Inference on Custom Dataset)</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-does-one-small-number-make-a-big-difference">🌸 Introduction: Does One Small Number Make a Big Difference?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-learning-rate">🐾 What Is a Learning Rate?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-experiment">🔬 The Experiment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-and-observations">📊 Results and Observations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion-what-did-i-learn">💭 Discussion: What Did I Learn?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">🐱 Key Takeaways</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">📚 References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-assistance-and-disclosure">🤖 AI Assistance and Disclosure</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gem Nicole R. Diones
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
