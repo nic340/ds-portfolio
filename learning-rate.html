@@ -419,7 +419,7 @@
 \[
 \theta_{\text{new}} = \theta_{\text{old}} - \eta \nabla L(\theta)
 \]</div>
-<p>Here, (\theta) represents the model’s weights, (\eta) is the learning rate, and (\nabla L(\theta)) represents the gradient of the loss.</p>
+<p>Here, <span class="math notranslate nohighlight">\(\theta\)</span> represents the model’s weights, <span class="math notranslate nohighlight">\(\eta\)</span> is the learning rate, and <span class="math notranslate nohighlight">\(\nabla L(\theta)\)</span> represents the gradient of the loss.</p>
 <p>Think of it as walking down a hill while trying to reach the lowest point. Very small steps may get you there eventually, but progress can be slow. Extremely large steps may cause you to overshoot the lowest point repeatedly. A suitable step size helps you move toward the bottom efficiently.</p>
 <p>The learning rate is a hyperparameter: a setting chosen before training rather than a value automatically learned by the model. An epoch is one complete pass through the training data. The Adam optimizer uses gradient information and adaptive updates to adjust model weights. A validation set helps evaluate performance during development, while a separate test set is reserved for the final evaluation. A random seed controls sources of randomness so that experiments can be repeated under comparable conditions.</p>
 </section>
