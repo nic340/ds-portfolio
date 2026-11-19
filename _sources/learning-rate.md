@@ -16,11 +16,11 @@ A neural network learns by adjusting its weights to reduce its loss. Loss is a n
 
 The learning rate controls the size of each adjustment. A simplified update rule is:
 
-\[
+$$
 \theta_{\text{new}} = \theta_{\text{old}} - \eta \nabla L(\theta)
-\]
+$$
 
-Here, \(\theta\) represents the model's weights, \(\eta\) is the learning rate, and \(\nabla L(\theta)\) represents the gradient of the loss.
+Here, \(\theta\) represents the model’s weights, \(\eta\) is the learning rate, and \(\nabla L(\theta)\) represents the gradient of the loss.
 
 Think of it as walking down a hill while trying to reach the lowest point. Very small steps may get you there eventually, but progress can be slow. Extremely large steps may cause you to overshoot the lowest point repeatedly. A suitable step size helps you move toward the bottom efficiently.
 
